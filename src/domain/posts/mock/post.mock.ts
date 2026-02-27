@@ -1,0 +1,60 @@
+import type { PostItem } from "../../../types/post.type";
+import Food1 from "../../../assets/images/food1.png"
+import Food2 from "../../../assets/images/food2.png"
+export const postMockData: PostItem[] = [
+  {
+    postId: 1,
+    menuName: "엽기 떡볶이 먹자요",
+    restaurantName: "엽기떡볶이 동대문본점",
+    content:"엽기 떡볶이 무슨 맛 드시나요?? 저는 참고로 초보맛 아니면 착한맛 둘 중에 하나 먹습니다 하하",
+    price: 14000,
+    foodType: "한식",
+    visitedDate: "2026.02.14",
+    rating: 4,
+    imageUrl: Food1,
+  },
+  {
+    postId: 2,
+    menuName: "엽기 오뎅",
+    restaurantName: "엽기떡볶이 노원역점",
+    content:"엽기 오뎅을 좋아하시나요 아니면 엽기 떡볶이를 좋아하시나요 저는 무조건 엽기 떡볶이 입니다",
+    price: 14000,
+    foodType: "양식",
+    visitedDate: "2026.02.17",
+    rating: 4,
+    imageUrl: "",
+  },
+  {
+    postId: 3,
+    menuName: "야채 곱창",
+    restaurantName: "야곱 좋아 만만세점",
+    content:"야채곱창 안에 들어가는 당면 굵은거 vs 얇은거 저는 얇은거 입니다",
+    price: 21000,
+    foodType: "한식",
+    visitedDate: "2026.05.14",
+    rating: 2,
+    imageUrl: "",
+  },
+  {
+    postId: 4,
+    menuName: "김밥",
+    restaurantName: "김밥천국 동대문본점",
+    content:"요즘 김밥이 너무 비싸요 기강 잡아주세요",
+    price: 7000,
+    foodType: "한식",
+    visitedDate: "2026.02.14",
+    rating: 5,
+    imageUrl: "",
+  },
+  {
+    postId: 5,
+    menuName: "피자",
+    restaurantName: "피자먹고싶다 동대문본점",
+    content:"피자에 저는 무조건 갈릭 소스 찍어 먹습니다람쥐",
+    price: 28000,
+    foodType: "양식",
+    visitedDate: "2026.02.14",
+    rating: 0,
+    imageUrl: Food2
+  },
+];
