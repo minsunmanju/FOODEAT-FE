@@ -11,10 +11,10 @@ const NavBar = () => {
   const location = useLocation();
 
   const navItems = [
-    { label: "홈", path: "/", icon: FiHome },
+    { label: "홈", path: "/home", icon: FiHome },
     { label: "지도", path: "/map", icon: FiMap },
     { label: "FOODTI", path: "/foodti/onboarding", icon: BsPencil },
-    { label: "룰렛", path: "/roulette", icon: PiDiceSix },
+    { label: "룰렛", path: "/roulette/onboarding", icon: PiDiceSix },
     { label: "나의 뱃지", path: "/badge", icon: IoTrophyOutline },
   ];
 

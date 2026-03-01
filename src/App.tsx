@@ -15,6 +15,8 @@ import FoodtiQuestionPage from "./domain/foodti/pages/FoodtiQuestionPage";
 import HomePage from "./domain/posts/pages/HomePage";
 import PostDetailPage from "./domain/posts/pages/PostDetailPage";
 import MapPage from "./domain/map/pages/MapPage";
+import RouletteOnboardingPage from "./domain/roulette/pages/RouletteOnboardingPage";
+import RoulettePage from "./domain/roulette/pages/RoulettePage";
 function App() {
   return (
     <AppFrame>
@@ -40,7 +42,9 @@ function App() {
           <Route path="/foodti/:step" element={<FoodtiQuestionPage />}></Route>
           {/* 지도 */}
           <Route path="/map" element={<MapPage />}></Route>
-        
+          {/* 룰렛 */}
+          <Route path="/roulette/onboarding" element={<RouletteOnboardingPage />}></Route>
+          <Route path="/roulette/" element={<RoulettePage />}></Route>
         </Routes>
       </BrowserRouter>
     </AppFrame>
