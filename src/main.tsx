@@ -4,5 +4,11 @@ import "./index.css";
 import App from "./App.tsx";
 import "./style.css";
 import "./styles/global.css";
+import QueryProvider from "./app/providers/QueryProvider.tsx";
+import { BrowserRouter } from "react-router-dom";
 
-createRoot(document.getElementById("root")!).render(<App />);
+createRoot(document.getElementById("root")!).render(
+  <QueryProvider>
+    <App />
+  </QueryProvider>,
+);

@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import type { ChangeEvent } from "react";
 
 export type Color = "text" | "neutral400";
 export type Size = "sm" | "md" | "comment" | "content";
@@ -9,15 +10,18 @@ export interface InputProps {
   size: Size;
   type: Type;
   placeholder?: string;
-  
+  value?: string
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-export function Input({ color, size, type, placeholder}: InputProps) {
+export function Input({ color, size, type, placeholder, value, onChange}: InputProps) {
   return (
     <input
       className={`${InputTheme.color[color]} ${InputTheme.size[size]}`}
       type={type}
       placeholder={placeholder}
+      value={value}
+      onChange={onChange}
     />
   );
 }
@@ -27,7 +31,7 @@ const InputTheme = {
     // 일반 텍스트 작성시
     text: "text-neutral-900 bg-white border border-orange-200 rounded-lg",
     // 아이디, 비밀번호, 회원가입
-    neutral400: "text-neutral-400 bg-white border border-orange-200 rounded-lg",
+    neutral400: "text-neutral-900 bg-white border border-orange-200 rounded-lg",
   },
   size: {
     // 가격 입력란
