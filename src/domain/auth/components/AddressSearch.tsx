@@ -8,7 +8,7 @@ type Props = {
   onSelectCoords: (result: AddressCoordsResult) => void;
 };
 
-export default function AddressSearh({
+export default function AddressSearch({
   onSelectCoords,
 }: Props) {
   const [address, setAddress] = useState("");
@@ -83,7 +83,7 @@ export default function AddressSearh({
                         ].join(" ")}
                       >
                         <div className="text-neutral-900">
-                          {item.addressName}
+                          {item.placeName}
                         </div>
                         <div className="mt-1 text-xs text-neutral-400">
                           lat {item.lat}, lng {item.lng}

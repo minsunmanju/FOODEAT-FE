@@ -4,7 +4,7 @@ import { create } from "zustand";
 type Step = 1 | 2 | 3 | 4;
 
 // 사용자가 회원가입시 입력할 정보
-type SignUpForm = {
+interface SignUpForm  {
   email: string;
   password: string;
   // passwordConfirm: string;

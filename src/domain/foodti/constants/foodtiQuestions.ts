@@ -8,6 +8,8 @@ export type FoodtiQuestion = {
   leftDesc: string;
   rightType: string;
   rightDesc: string;
+  leftValue: string;
+  rightValue: string;
 };
 
 export const FOODTI_QUESTIONS: FoodtiQuestion[] = [
@@ -19,6 +21,9 @@ export const FOODTI_QUESTIONS: FoodtiQuestion[] = [
     leftDesc: "매운맛이 있어야 살아!",
     rightType: "Mild",
     rightDesc: "부드럽고 편안한 맛이 좋아!",
+    leftValue: "S",
+    rightValue: "M"
+    
   },
   {
     quizId: 2,
@@ -28,6 +33,8 @@ export const FOODTI_QUESTIONS: FoodtiQuestion[] = [
     leftDesc: "든든하게 고기!",
     rightType: "Vegetable",
     rightDesc: "가볍게 채소!",
+    leftValue: "M",
+    rightValue:"V"
   },
 
   {
@@ -38,6 +45,8 @@ export const FOODTI_QUESTIONS: FoodtiQuestion[] = [
     leftDesc: "밥이 있어야 식사지!",
     rightType: "Noodles",
     rightDesc: "면은 언제나 옳아!",
+    leftValue:"R",
+    rightValue:"N"
   },
 
   {
@@ -48,5 +57,7 @@ export const FOODTI_QUESTIONS: FoodtiQuestion[] = [
     leftDesc: "국물 없으면 뭔가 허전해",
     rightType: "Dry",
     rightDesc: "깔끔하게 마무리 하는게 좋아",
+    leftValue:"B",
+    rightValue:"D"
   },
 ];

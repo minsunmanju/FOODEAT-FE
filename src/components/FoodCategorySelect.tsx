@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 
-const CATEGORIES = ["한식", "양식", "일식", "중식"] as const;
-
-type Category = (typeof CATEGORIES)[number];
+export const CATEGORIES = ["한식", "중식", "양식", "일식"] as const;
+export type CATEGORIES = (typeof CATEGORIES)[number]; 
+// ↑ 이름 그대로 쓰고 싶다면 가능하지만 헷갈려서 보통은 Category로 이름 바꿈
 
 type CategoryButtonProps = {
-  label: Category;
+  label: CATEGORIES;
   active: boolean;
   onClick: () => void;
 };
@@ -13,31 +13,36 @@ type CategoryButtonProps = {
 function CategoryButton({ label, active, onClick }: CategoryButtonProps) {
   return (
     <button
-      onClick={onClick}
       type="button"
-      className={["rounded-[50px] border px-4 py-1 text-sm transition",
-        active ? "border-orange-400 bg-orange-200 text-neutral-900" : "border-neutral-400 bg-white text-neutral-900"
-      ].join()}
+      onClick={onClick}
+      className={[
+        "rounded-[50px] border px-4 py-1 text-sm transition",
+        active
+          ? "border-orange-400 bg-orange-200 text-neutral-900"
+          : "border-neutral-400 bg-white text-neutral-900",
+      ].join(" ")} // ✅ join(" ")
     >
       {label}
     </button>
   );
 }
 
-export default function FoodCategorySelect() {
-    const [selectedCategory, setSelectedCateory] = useState<Category>("한식");
+type FoodCategorySelectProps = {
+  value: CATEGORIES;
+  onChange: (next: CATEGORIES) => void;
+};
 
-    return (
-        <div className="flex gap-2">
-            {CATEGORIES.map((label) =>(
-                <CategoryButton
-                key={label}
-                label={label}
-                active={selectedCategory === label}
-                onClick={() => setSelectedCateory(label)}
-            />
-            ))}
-
-        </div>
-    )
+export default function FoodCategorySelect({ value, onChange }: FoodCategorySelectProps) {
+  return (
+    <div className="flex gap-2">
+      {CATEGORIES.map((label) => (
+        <CategoryButton
+          key={label}
+          label={label}
+          active={value === label}
+          onClick={() => onChange(label)}
+        />
+      ))}
+    </div>
+  );
 }

@@ -10,7 +10,7 @@ export interface InputProps {
   size: Size;
   type: Type;
   placeholder?: string;
-  value?: string
+  value?: string |number
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
 

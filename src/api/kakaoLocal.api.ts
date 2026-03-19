@@ -15,7 +15,8 @@ type KakaoAddressResponse = {
 };
 
 export type AddressCoordsResult = {
-  addressName?: string | undefined;
+  placeName?: string;
+  addressName: string ;
   lat: number;
   lng: number;
 };
@@ -33,7 +34,8 @@ export async function fetchKeywordList(
     },
   );
   return (data.documents ?? []).map((d) => ({
-    addressName: d.place_name || d.address_name ||  d.road_address_name ,
+    addressName: d.road_address_name || d.address_name,
+    placeName: d.place_name,
     lat: Number(d.y),
     lng: Number(d.x),
   }));

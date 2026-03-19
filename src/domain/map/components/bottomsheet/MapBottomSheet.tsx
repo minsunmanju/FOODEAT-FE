@@ -10,23 +10,36 @@ import { IoArrowForwardCircleOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import MapBottomSheetModalLocation from "./MapBottomSheetModalLocation";
 import MapBottomSheetModalRadius from "./MapBottomSheetModalRadius";
+import { useGetMapDiary } from "./hooks/useGetMapDiary";
+import { useAuthStore } from "../../../../store/useAuthStore";
+import { useSignUpStore } from "../../../../store/useSignUpStore";
+import type { MapDiaryList } from "../../types/map.type";
 
 interface Props {
   onClickCurrentLocation: () => void;
   onClickHomeLocation: () => void;
   onChangeRadius: (r: number) => void;
+  locationLabel: string;
+  radius: number;
+  diaries: MapDiaryList[]
+  isLoading: boolean;
+  isError: boolean
 }
 
 const MapBottomSheet = ({
   onClickCurrentLocation,
   onClickHomeLocation,
   onChangeRadius,
+  locationLabel,
+  radius,
+  diaries
 }: Props) => {
   const { sheet, content } = useBottomSheet();
   const navigate = useNavigate();
 
   const [openModalLocation, setOpenModalLocation] = useState(false);
   const [openModalRadius, setOpenModalRadius] = useState(false);
+  
   const goWrite = () => {
     navigate("/post/write");
   };
@@ -37,6 +50,8 @@ const MapBottomSheet = ({
           onClose={() => setOpenModalLocation(false)}
           onClickCurrentLocation={onClickCurrentLocation}
           onClickHomeLocation={onClickHomeLocation}
+          
+
         />
       )}
 
@@ -69,11 +84,11 @@ const MapBottomSheet = ({
           <MapBottomSheetHeader />
           <div className="flex gap-2 pb-4">
             <MapBottomSheetButton
-              content="내 위치"
+              content={locationLabel}
               onClick={() => setOpenModalLocation(true)}
             />
             <MapBottomSheetButton
-              content="1km"
+              content={`반경 ${radius}km`}
               onClick={() => setOpenModalRadius(true)}
             />
           </div>
@@ -95,7 +110,7 @@ const MapBottomSheet = ({
             style={{ WebkitOverflowScrolling: "touch" }}
             ref={content}
           >
-            <MapBottomSheetContent />
+            <MapBottomSheetContent diaries={diaries}/>
           </div>
         </div>
       </motion.div>

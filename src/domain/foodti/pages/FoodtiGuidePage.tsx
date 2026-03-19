@@ -11,6 +11,13 @@ const TYPES = [
     title: "Spicy / Mild",
     leftLabel: "매운맛",
     rightLabel: "순한맛",
+    
+  },
+  {
+    icon: "🥕",
+    title: "Meat / Vegetable",
+    leftLabel: "고기",
+    rightLabel: "채소",
   },
   { icon: "🍚", title: "Rice / Noodles", leftLabel: "밥", rightLabel: "면" },
   {
@@ -19,12 +26,7 @@ const TYPES = [
     leftLabel: "국물 O",
     rightLabel: "국물 X",
   },
-  {
-    icon: "🧭",
-    title: "Adventurous / Classic",
-    leftLabel: "도전형",
-    rightLabel: "안전형",
-  },
+  
 ];
 
 const FoodtiGuidePage = () => {

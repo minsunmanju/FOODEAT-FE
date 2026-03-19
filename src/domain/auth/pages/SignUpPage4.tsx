@@ -7,7 +7,8 @@ import { useSignUpStore } from "../../../store/useSignUpStore";
 import { useSignUp } from "../hooks/useSignUp";
 import { useAuthStore } from "../../../store/useAuthStore";
 import type { AddressCoordsResult } from "../../../api/kakaoLocal.api";
-import AddressSearh from "../components/AddressSearch";
+
+import AddressSearch from "../components/AddressSearch";
 
 const SignUpPage4 = () => {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ const SignUpPage4 = () => {
           setTokens(res.accessToken, res.refreshToken ?? null);
           reset();
           alert("회원가입에 성공했어요!")
-          navigate("/login");
+          navigate("/");
         },
       },
     );
@@ -53,7 +54,7 @@ const SignUpPage4 = () => {
     <div className="flex flex-col h-dvh pt-16">
       <Header goBack title="회원가입" />
       <div className=" pt-8 ">
-        <AddressSearh onSelectCoords={handleSelectCoords} />
+        <AddressSearch onSelectCoords={handleSelectCoords} />
       </div>
 
       <div className="flex-1" />

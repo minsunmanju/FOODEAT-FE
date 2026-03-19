@@ -5,6 +5,6 @@
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
-    "types": ["kakao.maps.d.ts"]
+    "types": ["kakao.maps.d.ts", "vite/client", "vite-plugin-pwa/client"]
   }
 }

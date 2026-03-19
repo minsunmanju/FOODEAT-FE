@@ -24,7 +24,7 @@ const SignUpPage3 = () => {
 
   const nicknameOk =
     nicknameChecked &&
-    lastCheckedNickname === form.email &&
+    lastCheckedNickname === form.nickname &&
     form.nickname.trim().length > 0;
   const handleNext = () => {
     if (nicknameOk) {

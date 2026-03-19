@@ -4,6 +4,11 @@ import { FOODTI_QUESTIONS, type Side } from "../constants/foodtiQuestions";
 import FoodtiSelectCard from "../components/FoodtiSelectCard";
 import { Button } from "../../../components/Button";
 import NavBar from "../../../components/NavBar";
+import { useFoodtiStore } from "../../../store/useFoodtiStore";
+import { useSubmitFoodti } from "../hooks/useSubmitFoodti";
+import { useFoodtiResultStore } from "../store/useFoodtiResultStore";
+import { getFoodtiAnswersPayload } from "../hooks/getFoodtiAnswersPayload";
+import { Header } from "../../../components/Header";
 
 const FoodtiQuestionPage = () => {
   const navigate = useNavigate();
@@ -12,7 +17,12 @@ const FoodtiQuestionPage = () => {
   const index = stepNum - 1;
 
   const question = FOODTI_QUESTIONS[index];
-  const [activeSide, setActiveSide] = useState<Side | null>(null);
+
+  const { answers, setAnswer, resetAnswers } = useFoodtiStore();
+  const submitFoodti = useSubmitFoodti();
+  const setResult = useFoodtiResultStore((s) => s.setResult);
+
+  const activeSide = answers[question.quizId] ?? null;
   if (!question) {
     navigate("/foodti/1", { replace: true });
     return null;
@@ -21,16 +31,31 @@ const FoodtiQuestionPage = () => {
   const isLast = stepNum === FOODTI_QUESTIONS.length;
   const handleNext = () => {
     if (!activeSide) return;
+
     if (isLast) {
-      navigate("/foodti/result");
+      const payloadAnswers = getFoodtiAnswersPayload(answers);
+
+      submitFoodti.mutate(
+        { answers: payloadAnswers },
+        {
+          onSuccess: (res) => {
+            setResult(res.foodtiNumber, res.foodtiCode, res.recommendedMenus);
+            resetAnswers();
+            navigate("/foodti/result");
+          },
+          onError: () => {
+            alert("제출에 실패했어요.");
+          },
+        },
+      );
     } else {
       navigate(`/foodti/${stepNum + 1}`);
-      setActiveSide(null);
     }
   };
 
   return (
     <div className="flex flex-col h-dvh pt-[64px] pb-[40px]">
+      <Header title="FOODTI" goBack />
       <FoodtiSelectCard
         quizId={question.quizId}
         titleEng={question.titleEng}
@@ -40,21 +65,21 @@ const FoodtiQuestionPage = () => {
         selectRightType={question.rightType}
         selectRightDesc={question.rightDesc}
         activeSide={activeSide}
-        onSelect={(side) => setActiveSide(side)}
+        onSelect={(side) => setAnswer(question.quizId, side)}
       />
-    <div className="flex flex-1" />
+      <div className="flex flex-1" />
       <div className="mb-8">
-      <Button
-        type="button"
-        color="orange400"
-        size="long"
-        text="white"
-        onClick={handleNext}
-      >
-        다음
-      </Button>
+        <Button
+          type="button"
+          color="orange400"
+          size="long"
+          text="white"
+          onClick={handleNext}
+        >
+          {isLast ? "제출 하기" : "다음"}
+        </Button>
       </div>
-      <NavBar/>
+      <NavBar />
     </div>
   );
 };

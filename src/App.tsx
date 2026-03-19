@@ -17,13 +17,14 @@ import PostDetailPage from "./domain/posts/pages/PostDetailPage";
 import MapPage from "./domain/map/pages/MapPage";
 import RouletteOnboardingPage from "./domain/roulette/pages/RouletteOnboardingPage";
 import RoulettePage from "./domain/roulette/pages/RoulettePage";
+import FoodtiResultPage from "./domain/foodti/pages/FoodtiResultPage";
 function App() {
   return (
     <AppFrame>
       <BrowserRouter>
         <Routes>
           {/* 로그인 */}
-          <Route path="/login" element={<LoginPage />}></Route>
+          <Route path="/" element={<LoginPage />}></Route>
           {/* 회원가입 */}
           <Route path="/signup1" element={<SignUpPage1 />}></Route>
           <Route path="/signup2" element={<SignUpPage2 />}></Route>
@@ -32,7 +33,7 @@ function App() {
           {/* 식사 일지 */}
           <Route path="/home" element={<HomePage />}></Route>
           <Route path="/post/write" element={<PostWritePage />}></Route>
-          <Route path="/post/:postId" element={<PostDetailPage />}></Route>
+          <Route path="/post/:diaryId" element={<PostDetailPage />}></Route>
           {/* FOODTI */}
           <Route
             path="/foodti/onboarding"
@@ -40,6 +41,7 @@ function App() {
           ></Route>
           <Route path="/foodti/guide" element={<FoodtiGuidePage />}></Route>
           <Route path="/foodti/:step" element={<FoodtiQuestionPage />}></Route>
+          <Route path="/foodti/result" element={<FoodtiResultPage />}></Route>
           {/* 지도 */}
           <Route path="/map" element={<MapPage />}></Route>
           {/* 룰렛 */}

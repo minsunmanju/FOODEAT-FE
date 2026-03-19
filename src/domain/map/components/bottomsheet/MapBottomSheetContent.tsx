@@ -1,12 +1,17 @@
 import React from "react";
 import { postMockData } from "../../../posts/mock/post.mock";
 import MapBottomSheetPostCard from "./MapBottomSheetPostCard";
+import type { MapDiaryList } from "../../types/map.type";
 
-const MapBottomSheetContent = () => {
+type MapBottomSheetConetentProps = {
+  diaries: MapDiaryList[];
+};
+
+const MapBottomSheetContent = ({ diaries }: MapBottomSheetConetentProps) => {
   return (
     <div>
-      {postMockData.map((p) => (
-        <MapBottomSheetPostCard key={p.postId} post={p} />
+      {diaries.map((diary) => (
+        <MapBottomSheetPostCard key={diary.diaryId} post={diary} />
       ))}
     </div>
   );

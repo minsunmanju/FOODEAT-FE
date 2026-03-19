@@ -2,6 +2,7 @@ import React from "react";
 import { FiHome } from "react-icons/fi";
 import { BiCurrentLocation } from "react-icons/bi";
 import Divider from "../../../../components/Divider";
+import { useSignUpStore } from "../../../../store/useSignUpStore";
 
 interface Props {
   onClose: () => void;
@@ -16,6 +17,7 @@ const MapBottomSheetModalLocation = ({
   onClickCurrentLocation,
   onClickHomeLocation,
 }: Props) => {
+  const {form} = useSignUpStore();
   return (
     <div
       onClick={onClose}
