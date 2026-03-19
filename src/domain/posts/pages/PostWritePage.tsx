@@ -32,7 +32,7 @@ const PostWritePage = () => {
   const [price, setPrice] = useState("");
   const [rating, setRating] = useState<number>(0);
   const [comment, setComment] = useState("");
-  const [imageUrls, setImageUrls] = useState<string[]>([])
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
   // const [startDate, setStartDate] = useState(new Date());
   // const [clicked, setClicked] = useState([false, false, false, false, false]);
   // const array = [0, 1, 2, 3, 4];
@@ -55,7 +55,7 @@ const PostWritePage = () => {
     setLatitude(result.lat);
     setLongitude(result.lng);
   };
-  
+
   const visitedAtStr = useMemo(
     () => visitedAt.toISOString().slice(0, 10),
     [visitedAt],
@@ -77,10 +77,10 @@ const PostWritePage = () => {
         visitedAt,
         category,
         menuName,
-        price :Number(price),
+        price: Number(price),
         rating,
         comment,
-        imageUrls
+        imageUrls,
       },
       {
         onSuccess: () => {
@@ -104,16 +104,11 @@ const PostWritePage = () => {
   return (
     <div className="flex flex-col gap-8 pt-16">
       <Header goBack title="식사 일지 작성" />
-      <div>
-        <div className="mb-2 text-sm text-neutral-600">식당</div>
-        <AddressSearch onSelectCoords={handleSelectPlace} />
-
-        {restaurantName && (
-          <div className="mt-3 rounded-lg border border-orange-200 bg-orange-50 p-3 text-sm">
-            <div className="font-medium text-neutral-900">{restaurantName}</div>
-            <div className="mt-1 text-neutral-500">{restaurantAddress}</div>
-          </div>
-        )}
+      <div className="flex items-start gap-4">
+        <div className="shrink-0 pt-2">식당</div>
+        <div className="flex-1">
+          <AddressSearch onSelectCoords={handleSelectPlace} />
+        </div>
       </div>
 
       <div className="flex items-center">
@@ -172,7 +167,7 @@ const PostWritePage = () => {
         </div>
       </div>
       <div>사진</div>
-      <ImageUploader onUploaded={setImageUrls}/>
+      <ImageUploader onUploaded={setImageUrls} />
       <div>
         <div>코멘트</div>
         <Input

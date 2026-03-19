@@ -2,15 +2,16 @@ import { useMemo, useState } from "react";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 type DropdownProps = {
   data: string[];
+  value: string;
+  onChange : (value: string) => void
 };
 
-export default function Dropdown({ data }: DropdownProps) {
+export default function Dropdown({ data , value, onChange}: DropdownProps) {
   const list = useMemo(() => data ?? [], [data]);
-  const [currentValue, setCurrentValue] = useState(list[0] ?? "");
   const [showOptions, setShowOptions] = useState(false);
 
-  const handleSelect = (value: string) => {
-    setCurrentValue(value);
+  const handleSelect = (nextValue: string) => {
+    onChange(nextValue)
     setShowOptions(false);
   };
 
@@ -25,7 +26,7 @@ export default function Dropdown({ data }: DropdownProps) {
             text-[12px] cursor-pointer text-neutral-400
             "
         >
-          <span className="flex text-[12px] items-center">{currentValue}</span>
+          <span className="flex text-[12px] items-center">{value}</span>
           <span className="flex text-[12px] font-bold items-center text-neutral-400 leading-none pl-[4px]">
             <MdOutlineKeyboardArrowDown size={16}/>
           </span>

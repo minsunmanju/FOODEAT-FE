@@ -3,6 +3,7 @@ import {
   type DiaryListResponse,
   type CreateDiaryPayload,
   type DiaryDetailResponse,
+  type DiaryFilterParams,
 } from "../types/post.type";
 import { axiosInstance } from "./axiosInstance";
 import { API } from "./endpoints";
@@ -12,11 +13,30 @@ export const createDiaryApi = async (payload: CreateDiaryPayload) => {
   return data;
 };
 
-export const getDiaryList = async (page: number, size: number = 10) => {
+type GetDiaryListParams = DiaryFilterParams & {
+  page: number;
+  size: number;
+};
+
+export const getDiaryList = async ({
+  page,
+  size = 10,
+  sort,
+  category,
+  priceRange,
+  rating,
+}: GetDiaryListParams) => {
   const { data } = await axiosInstance.get<DiaryListResponse>(
     API.DIARY.GET_DIARY,
     {
-      params: { page, size },
+      params: {
+        page,
+        size,
+        sort,
+        category: category ?? undefined,
+        priceRange: priceRange ?? undefined,
+        rating: rating ?? undefined,
+      },
     },
   );
   return data;
@@ -28,7 +48,3 @@ export const getDiaryDetail = async (diaryId: number) => {
   );
   return data;
 };
-// export const getPresignedUrlApi = async (payload: PresignRequest) =>{
-//     const {data} = await axiosInstance.post<PreSignResponse>("/api/v1/files/presign", payload)
-//     return data
-// }

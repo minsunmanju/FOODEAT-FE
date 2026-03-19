@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
-const CATEGORIES = ["1만원 이하", "1~2만원", "2만원 이상"] as const;
+export const PRICE_OPTIONS = ["1만원 이하", "1~2만원", "3만원 이상"] as const;
+export type PriceOption = (typeof PRICE_OPTIONS)[number] | null
 
-type Category = (typeof CATEGORIES)[number];
 
 type CategoryButtonProps = {
-  label: Category;
+  label: (typeof PRICE_OPTIONS)[number] 
   active: boolean;
   onClick: () => void;
 };
@@ -27,17 +27,21 @@ function CategoryButton({ label, active, onClick }: CategoryButtonProps) {
   );
 }
 
-export default function PriceSelect() {
-  const [selectedCategory, setSelectedCateory] = useState<Category>("1만원 이하");
+type PriceSelectProps = {
+  value: PriceOption;
+  onChange: (next: PriceOption) => void
+}
+
+export default function PriceSelect({value, onChange} : PriceSelectProps) {
 
   return (
     <div className="flex gap-2">
-      {CATEGORIES.map((label) => (
+      {PRICE_OPTIONS.map((label) => (
         <CategoryButton
           key={label}
           label={label}
-          active={selectedCategory === label}
-          onClick={() => setSelectedCateory(label)}
+          active={value === label}
+          onClick={() => onChange(label)}
         />
       ))}
     </div>

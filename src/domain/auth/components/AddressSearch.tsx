@@ -1,101 +1,91 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import type { AddressCoordsResult } from "../../../api/kakaoLocal.api";
 import { useKakaoAddressSearch } from "../hooks/useKakaoAddressSearch";
 import { Input } from "../../../components/Input";
-import { Button } from "../../../components/Button";
 
 type Props = {
   onSelectCoords: (result: AddressCoordsResult) => void;
 };
 
-export default function AddressSearch({
-  onSelectCoords,
-}: Props) {
+export default function AddressSearch({ onSelectCoords }: Props) {
   const [address, setAddress] = useState("");
-  const search = useKakaoAddressSearch();
-
   const [results, setResults] = useState<AddressCoordsResult[]>([]);
-  const [selected, setSelected] = useState<AddressCoordsResult | null>(null);
-  const handleSearch = () => {
-    if (!address.trim()) return;
+  const [showResults, setShowResults] = useState(false);
 
-    search.mutate(address, {
-      onSuccess: (list) => {
-        console.log("kakao list", list)
-        setResults(list);
-        setSelected(null);
-      },
-    });
-  };
+  const search = useKakaoAddressSearch();
+  const skipSearchRef = useRef(false);
+
+  useEffect(() => {
+    if (skipSearchRef.current) {
+      skipSearchRef.current = false;
+      return;
+    }
+
+    const keyword = address.trim();
+
+    if (!keyword) {
+      setResults([]);
+      setShowResults(false);
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      search.mutate(keyword, {
+        onSuccess: (list) => {
+          setResults(list);
+          setShowResults(true);
+        },
+      });
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [address]);
 
   const handleSelect = (item: AddressCoordsResult) => {
-    setSelected(item);
+    skipSearchRef.current = true;
+    setAddress(item.placeName ?? item.addressName);
+    setResults([]);
+    setShowResults(false);
     onSelectCoords(item);
-    // onChangeAddress(item.addressName);
   };
+
+  const handleChangeAddress = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setAddress(value);
+
+    if (!value.trim()) {
+      setResults([]);
+      setShowResults(false);
+    }
+  };
+
   return (
-    <div>
-      <div className="flex items-center justify-between gap-3">
-        <div className="flex-1">
-          <Input
-            color="neutral400"
-            size="sm"
-            type="text"
-            placeholder="주소를 검색하세요"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-          />
-        </div>
+    <div className="relative w-full">
+      <Input
+        color="neutral400"
+        size="md"
+        type="text"
+        placeholder="주소를 검색하세요"
+        value={address}
+        onChange={handleChangeAddress}
+      />
 
-        <Button
-          color="orange200"
-          size="small"
-          text="text"
-          type="button"
-          onClick={handleSearch}
-        >
-          {search.isPending ? "검색중" : "검색"}
-        </Button>
-      </div>
-      {search.isSuccess && (
-        <div className="mt-3">
-          {results.length === 0 ? (
-            <p>검색 결과가 없어요. 주소를 다시 확인해 주세요</p>
-          ) : (
-            <>
-              <ul className="max-h-[220px] overflow-y-auto rounded-lg border border-orange-200 bg-white">
-                {results.map((item) => {
-                  const isActive =
-                    selected?.addressName === item.addressName &&
-                    selected?.lat === item.lat &&
-                    selected?.lng === item.lng;
-
-                  return (
-                    <li key={`${item.addressName}-${item.lat}-${item.lng}`}>
-                      <button
-                        type="button"
-                        onClick={() => handleSelect(item)}
-                        className={[
-                          "w-full px-3 py-3 text-left text-sm",
-                          "border-b border-orange-100 last:border-b-0",
-                          "hover:bg-orange-50",
-                          isActive ? "bg-orange-100 font-medium" : "bg-white",
-                        ].join(" ")}
-                      >
-                        <div className="text-neutral-900">
-                          {item.placeName}
-                        </div>
-                        <div className="mt-1 text-xs text-neutral-400">
-                          lat {item.lat}, lng {item.lng}
-                        </div>
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
-            </>
-          )}
-        </div>
+      {showResults && results.length > 0 && (
+        <ul className="absolute left-0 right-0 top-full z-20 mt-2 max-h-[220px] overflow-y-auto rounded-lg border border-orange-200 bg-white shadow-md">
+          {results.map((item) => (
+            <li key={`${item.addressName}-${item.lat}-${item.lng}`}>
+              <button
+                type="button"
+                onClick={() => handleSelect(item)}
+                className="w-full border-b border-orange-100 px-3 py-3 text-left text-sm hover:bg-orange-50 last:border-b-0"
+              >
+                <div className="text-neutral-900">
+                  {item.placeName ?? item.addressName}
+                </div>
+              </button>
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   );
